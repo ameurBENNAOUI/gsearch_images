@@ -1,3 +1,8 @@
+import os
+from timeit import default_timer as timer
+import requests, lxml, re, json, urllib.request
+from bs4 import BeautifulSoup
+import uvicorn
 from fastapi import FastAPI
 from starlette.status import HTTP_403_FORBIDDEN
 import os
@@ -61,24 +66,24 @@ def get_original_images(soup):
         print(original_size_img)
 
    
-    return  original_size_img  
+    return  original_images  
 
 app = FastAPI(openapi_url="/openapi.json", docs_url="/docs",title='Gsearch Engine  API')
 
 
 @app.get("/gsearch",tags=["google search"])
 async def search(keywords:str):
+    # &source=lnms&tbs=isz:lt,islt:2mp&safe=active
     params = {
         "q": keywords, # search query
         "tbm": "isch",                # image results
         "hl": "en",                   # language
-        "ijn": "0"                    # page number
-    }
+        "ijn": "0"     }
     html = requests.get("https://www.google.com/search", params=params, headers=headers, timeout=30)
     soup = BeautifulSoup(html.text, 'lxml')  
     data= get_original_images(soup)
+    print("======================================================")
+    print(len(data))
     return JSONResponse(content=data)
-# if __name__ == "__main__":
-#     uvicorn.run("main:app", host="0.0.0.0", port=8000, log_level="info")
-
-
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000)
