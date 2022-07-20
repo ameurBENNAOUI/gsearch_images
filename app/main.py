@@ -73,9 +73,10 @@ app = FastAPI(openapi_url="/openapi.json", docs_url="/docs",title='Gsearch Engin
 
 @app.get("/gsearch",tags=["google search"])
 async def search(keywords:str):
-    # &source=lnms&tbs=isz:lt,islt:2mp&safe=active
+    # &source=lnms&tbs=isz:lt,islt:2mp&safe,=active
     params = {
-        "q": keywords, # search query
+        "q": keywords, 
+        "safe"="active",
         "tbm": "isch",                # image results
         "hl": "en",                   # language
         "ijn": "0"     }
