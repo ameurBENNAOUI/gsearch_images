@@ -1,0 +1,7 @@
+uvicorn
+bs4
+numpy
+requests
+fastapi
+lxml
+gunicorn
