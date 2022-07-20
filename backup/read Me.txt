@@ -1,2 +1,0 @@
-docker build -t gsearch .
-docker run -d --name gsearch_c -p 8000:8000 gsearch
